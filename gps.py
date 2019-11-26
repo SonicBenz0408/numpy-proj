@@ -26,18 +26,34 @@ for track in gpx.tracks:
 data = np.array(data_list)	
 
 
-figure = plt.figure()
-ax = plt.axes(projection='3d')
+fig = plt.figure()
+ax1 = fig.add_subplot(1, 2, 1, projection='3d')
+ax2 = fig.add_subplot(1, 2, 2, projection='3d')
+#ax3 = fig.add_subplot(1, 3, 3, projection='3d')
+cb = ax2.scatter3D(data[:,0], data[:,1], data[:,2], s=3, c=data[:,3], cmap='Reds', alpha=0.1)
+#ax.scatter3D(data[0,0], data[0,1], data[0,2], s=30, color='green')
+ax1.scatter3D(data[-1,0], data[-1,1], data[-1,2], s=3, color='cyan')
+ax1.text(data[0,0]-0.01,data[0,1],data[0,2]-150, 'start point', color='green')
 
-cb = ax.scatter3D(data[:,0], data[:,1], data[:,2], s=3, c=0.01*data[:,3], cmap='Reds')
-ax.scatter3D(data[0,0], data[0,1], data[0,2], s=30, color='green')
-ax.plot3D(data[:,0], data[:,1], data[:,2], c='blue')
-ax.text(data[0,0]-0.01,data[0,1],data[0,2]-150, 'start point', color='green')
-plt.colorbar(cb)
+select_up = []
+select_down = []
+for i in range(len(data[:,2])-1):
+	if data[i+1,2] > data[i,2]:
+		select_up.append(i+1)
+	else :
+		select_down.append(i+1)
+
+ax1.scatter3D(data[select_up,0], data[select_up,1], data[select_up,2], s=0.1, color='red')
+ax1.scatter3D(data[select_down,0], data[select_down,1], data[select_down,2], s=0.1, color='darkgreen')
+
+
 plt.title(gpx.name)
-ax.set_xlabel("lat",size=12, color='indigo') 
-ax.set_ylabel("lon",size=12, color='indigo')
-ax.set_zlabel("ele",size=12, color='indigo')  
+ax1.set_xlabel("lat",size=12, color='indigo', rotation=-10) 
+ax1.set_ylabel("lon",size=12, color='indigo', rotation=50)
+ax1.set_zlabel("ele",size=12, color='indigo')  
 
+cb = ax2.scatter3D(data[:,0], data[:,1], data[:,2], s=3, c=data[:,3], cmap='Reds')
+cbar = plt.colorbar(cb)
+cbar.set_label("speed", size=12, color='indigo', rotation=10)
 
 plt.show()
