@@ -1,7 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import gpxpy.parser as ps
+from mpl_toolkits.mplot3d.art3d import Poly3DCollection as poly
 from mpl_toolkits import mplot3d
+
 
 gpx_file = open('track.gpx', 'r')
 gpx_parser = ps.GPXParser(gpx_file)
@@ -45,6 +47,23 @@ for i in range(len(data[:,2])-1):
 
 ax1.scatter3D(data[select_up,0], data[select_up,1], data[select_up,2], s=0.1, color='red')
 ax1.scatter3D(data[select_down,0], data[select_down,1], data[select_down,2], s=0.1, color='darkgreen')
+
+height=min(data[:,2])
+v = []
+for k in range(0, len(data[:,1]) - 1):
+    x = [data[k,0], data[k+1,0], data[k+1,0], data[k,0]]
+    y = [data[k,1], data[k+1,1], data[k+1,1], data[k,1]]
+    z = [data[k,2], data[k+1,2], height,height]
+    # zip(x,y,z) make 4 coordinates for each polygon
+    # list below is necessary in python 3/remove for python 2
+    v.append(list(zip(x, y, z)))
+
+
+poly1=ax1.add_collection3d(poly(v))
+poly.set_alpha(poly1,0.5)
+
+
+
 
 
 plt.title(gpx.name)
