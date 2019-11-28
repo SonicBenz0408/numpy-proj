@@ -62,8 +62,8 @@ int_low=int(low[0])
 int_high=int(high[0])
 ax1.text(data[int_low,0],data[int_low,1],data[int_low,2],'lowest point',color='blue')
 ax1.text(data[int_high,0],data[int_high,1],data[int_high,2],'highest point',color='red')
-ax1.scatter3D(data[int_low,0],data[int_low,1],data[int_low,2],s=10,color='blue',marker="v")
-ax1.scatter3D(data[int_high,0],data[int_high,1],data[int_high,2],s=10,color='red',marker="^")
+ax1.scatter3D(data[int_low,0],data[int_low,1],data[int_low,2],s=60,color='blue',marker="v")
+ax1.scatter3D(data[int_high,0],data[int_high,1],data[int_high,2],s=60,color='red',marker="^")
 
 height=min(data[:,2])
 v = []
