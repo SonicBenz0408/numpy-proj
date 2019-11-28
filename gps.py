@@ -53,6 +53,18 @@ ax1.set_zlabel("ele",size=12, color='indigo', rotation=-5)
 ax1.set_zlim((200, 700))
 ax1.legend(numpoints=1, loc='upper left')
 
+sort_elevation=sorted(data[:,2])
+lowest=sort_elevation[0]
+highest=sort_elevation[-1]
+low=np.where(data[:,2]==lowest)
+high=np.where(data[:,2]==highest)
+int_low=int(low[0])
+int_high=int(high[0])
+ax1.text(data[int_low,0],data[int_low,1],data[int_low,2],'lowest point',color='blue')
+ax1.text(data[int_high,0],data[int_high,1],data[int_high,2],'highest point',color='red')
+ax1.scatter3D(data[int_low,0],data[int_low,1],data[int_low,2],s=10,color='blue',marker="v")
+ax1.scatter3D(data[int_high,0],data[int_high,1],data[int_high,2],s=10,color='red',marker="^")
+
 height=min(data[:,2])
 v = []
 for k in range(0, len(data[:,1]) - 1):
